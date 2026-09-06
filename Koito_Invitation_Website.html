@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faith &amp; Joshua</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Pinyon+Script&display=swap');
+
+  :root{
+    --burgundy-deep: #430d1c;
+    --burgundy: #6b1a2e;
+    --burgundy-light: #83233a;
+    --gold: #c9a24a;
+    --gold-soft: #e6cf97;
+    --gold-dim: rgba(201,162,74,0.55);
+    --ivory: #f8f1e4;
+    --ink: #2a1610;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    font-family:'EB Garamond', serif;
+    background: var(--ivory);
+    color: var(--ink);
+  }
+
+  section{ padding: 90px 24px; position: relative; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height: 100svh;
+    position: relative;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    color: var(--ivory);
+    background:
+      radial-gradient(130% 95% at 50% 8%, var(--burgundy-light) 0%, var(--burgundy) 46%, var(--burgundy-deep) 78%, #2f0812 100%);
+    overflow:hidden;
+    padding: 60px 24px;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(201,162,74,0.05) 0 2px, transparent 2px 34px),
+      repeating-linear-gradient(-45deg, rgba(201,162,74,0.05) 0 2px, transparent 2px 34px);
+  }
+  .hero::after{
+    content:"";
+    position:absolute; inset:0;
+    box-shadow: inset 0 0 220px rgba(20,3,8,0.55);
+  }
+
+  .hero-frame{
+    position:absolute; top:22px; left:22px; right:22px; bottom:22px;
+    border:1.5px solid var(--gold);
+  }
+  .hero-frame::before{
+    content:""; position:absolute; inset:8px; border:1px solid var(--gold-dim);
+  }
+
+  .watermark{
+    position:absolute; top:52%; left:50%;
+    width:520px; height:520px;
+    transform: translate(-50%,-50%);
+    opacity:0.06; z-index:1;
+  }
+
+  .floral{ position:absolute; width:190px; height:190px; z-index:3; pointer-events:none; }
+  .floral.tl{ top:26px; left:26px; }
+  .floral.tr{ top:26px; right:26px; transform: scaleX(-1); }
+  .floral.bl{ bottom:26px; left:26px; transform: scaleY(-1); }
+  .floral.br{ bottom:26px; right:26px; transform: scale(-1,-1); }
+  .floral.small{ width:140px; height:140px; }
+
+  @media (max-width: 560px){
+    .floral{ width:100px; height:100px; }
+    .floral.tl{ top:12px; left:12px; }
+    .floral.tr{ top:12px; right:12px; }
+    .floral.bl{ bottom:12px; left:12px; }
+    .floral.br{ bottom:12px; right:12px; }
+    .floral.small{ width:80px; height:80px; }
+  }
+
+  .hero-inner{
+    position:relative; z-index:4; max-width: 680px;
+    opacity: 0; animation: rise 1.1s ease-out 0.15s forwards;
+  }
+  @keyframes rise{ from{ opacity:0; transform: translateY(16px);} to{ opacity:1; transform: translateY(0);} }
+  @media (prefers-reduced-motion: reduce){ .hero-inner{ animation: none; opacity: 1; } }
+
+  .crest{ margin-bottom: 16px; }
+
+  .eyebrow{
+    font-family:'Cormorant Garamond', serif; font-style: italic; font-weight: 500;
+    font-size: clamp(15px, 2.2vw, 20px); color: var(--gold-soft); margin: 0 0 0 0;
+  }
+
+  h1.title{
+    font-family:'Pinyon Script', cursive; font-weight:400;
+    font-size: clamp(84px, 16vw, 150px); line-height: 1;
+    margin: 4px 0 6px 0; color: var(--gold);
+    text-shadow: 0 2px 18px rgba(0,0,0,0.25);
+  }
+
+  .subtitle{
+    font-size: 13px; letter-spacing: 0.4em; text-transform: uppercase;
+    color: rgba(248,241,228,0.72); margin: 0 0 22px 4px;
+  }
+
+  .divider{ display:flex; align-items:center; justify-content:center; gap:14px; margin: 4px 0 26px 0; }
+  .divider .line{ width:80px; height:1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+  .divider .line.r{ background: linear-gradient(90deg, var(--gold), transparent); }
+
+  .lead{
+    font-family:'Cormorant Garamond', serif; font-style: italic; font-weight: 500;
+    font-size: clamp(17px, 2.6vw, 22px); line-height: 1.6; margin: 0 0 28px 0;
+  }
+
+  .names{
+    font-family:'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(30px, 6vw, 44px); font-weight: 500; line-height: 1.3;
+    color: #fffaf0; margin: 0 0 26px 0;
+  }
+  .amp{ display:block; font-family:'Pinyon Script', cursive; color: var(--gold); font-size: 0.85em; margin: 0; }
+
+  .save-date{ font-family:'Cormorant Garamond', serif; font-style: italic; font-size: clamp(16px, 2.6vw, 19px); }
+  .save-date .venue{ color: var(--gold-soft); font-size: 1.1em; }
+
+  .scroll-cue{
+    position:absolute; bottom: 34px; left:50%; transform: translateX(-50%);
+    font-size: 12px; letter-spacing: 0.16em; color: rgba(248,241,228,0.5); z-index:4;
+  }
+
+  /* ---------- DETAILS ---------- */
+  .details{ max-width: 780px; margin: 0 auto; text-align:center; }
+
+  .details .kicker{
+    font-family:'Cormorant Garamond', serif; font-style: italic; font-size: 20px;
+    color: var(--burgundy); margin: 0 0 6px 0;
+  }
+  .details h2{
+    font-family:'Cormorant Garamond', serif; font-weight: 600; font-style: italic;
+    font-size: clamp(30px, 5vw, 40px); color: var(--burgundy-deep); margin: 0 0 12px 0;
+  }
+  .details .mini-divider{ display:flex; align-items:center; justify-content:center; gap:12px; margin: 0 0 46px 0; }
+  .details .mini-divider .line{ width:60px; height:1px; background: linear-gradient(90deg, transparent, var(--burgundy)); }
+  .details .mini-divider .line.r{ background: linear-gradient(90deg, var(--burgundy), transparent); }
+
+  .cards{
+    display:grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: var(--gold); border: 1px solid var(--gold);
+  }
+  @media (max-width: 720px){ .cards{ grid-template-columns: 1fr; } }
+
+  .card{ background: var(--ivory); padding: 42px 26px; }
+  .card .label{ font-size: 13px; letter-spacing: 0.14em; color: var(--burgundy); margin-bottom: 14px; }
+  .card .value{ font-family:'Cormorant Garamond', serif; font-style: italic; font-size: 26px; color: var(--ink); line-height: 1.4; }
+  .card .value small{
+    display:block; font-family:'EB Garamond', serif; font-style: normal;
+    font-size: 15px; color: #6b5a4a; margin-top: 6px;
+  }
+  .card .maplink{
+    display:inline-block; margin-top: 14px; font-family:'EB Garamond', serif; font-style: normal;
+    font-size: 15px; color: var(--burgundy); text-decoration: none;
+    border-bottom: 1px solid var(--gold); padding-bottom: 1px;
+  }
+  .card .maplink:hover{ color: var(--burgundy-deep); }
+
+  /* ---------- DRESS CODE / RSVP ---------- */
+  .split{ background: var(--burgundy-deep); color: var(--ivory); padding: 86px 24px; position:relative; overflow:hidden; }
+  .split .floral{ opacity: 0.9; }
+  .split-inner{
+    position:relative; z-index:2; max-width: 720px; margin: 0 auto;
+    display:grid; grid-template-columns: 1fr 1fr; gap: 50px; text-align:center;
+  }
+  @media (max-width: 620px){ .split-inner{ grid-template-columns: 1fr; gap: 44px; } }
+
+  .split h3{
+    font-size: 14px; letter-spacing: 0.16em; color: var(--gold-soft); margin: 0 0 14px 0;
+  }
+  .split p{ font-family:'Cormorant Garamond', serif; font-style: italic; font-size: 26px; margin: 0; color: #fffaf0; }
+  .split p.small{
+    font-family:'EB Garamond', serif; font-style: normal; font-size: 16px;
+    color: rgba(248,241,228,0.75); margin-top: 8px;
+  }
+
+  .rsvp-btn{
+    display:inline-block;
+    margin-top: 16px;
+    font-family:'EB Garamond', serif;
+    font-size: 17px;
+    letter-spacing: 0.03em;
+    color: var(--burgundy-deep);
+    background: linear-gradient(180deg, var(--gold-soft), var(--gold));
+    border: none;
+    padding: 13px 34px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .rsvp-btn:hover{ transform: translateY(-1px); box-shadow: 0 6px 18px rgba(0,0,0,0.25); }
+
+  /* ---------- RSVP MODAL ---------- */
+  .modal-overlay{
+    position: fixed; inset: 0;
+    background: rgba(20,4,9,0.72);
+    display:flex; align-items:center; justify-content:center;
+    padding: 24px;
+    z-index: 100;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .modal-overlay.open{ opacity: 1; pointer-events: auto; }
+
+  .modal-card{
+    background: var(--ivory);
+    max-width: 440px; width: 100%;
+    border: 1px solid var(--gold);
+    padding: 44px 36px 36px;
+    position: relative;
+    text-align: center;
+    transform: translateY(10px);
+    transition: transform 0.25s ease;
+    max-height: 88vh;
+    overflow-y: auto;
+  }
+  .modal-overlay.open .modal-card{ transform: translateY(0); }
+
+  .modal-close{
+    position:absolute; top:14px; right:16px;
+    background:none; border:none; font-size:22px; line-height:1;
+    color: var(--burgundy); cursor:pointer; font-family: serif;
+  }
+
+  .modal-card h3{
+    font-family:'Cormorant Garamond', serif; font-style: italic; font-weight: 600;
+    font-size: 30px; color: var(--burgundy-deep); margin: 0 0 6px 0;
+  }
+  .modal-card .sub{
+    font-size: 15px; color: #6b5a4a; margin: 0 0 26px 0;
+  }
+
+  .field{ text-align:left; margin-bottom: 18px; }
+  .field label{
+    display:block; font-size: 13px; letter-spacing: 0.08em; color: var(--burgundy);
+    margin-bottom: 6px;
+  }
+  .field input{
+    width:100%; font-family:'EB Garamond', serif; font-size: 17px;
+    padding: 10px 12px; border: 1px solid #c9b89a; background: #fffdf8;
+    color: var(--ink);
+  }
+  .field input:focus{ outline: none; border-color: var(--gold); }
+
+  .modal-submit{
+    width:100%; margin-top: 6px;
+    font-family:'EB Garamond', serif; font-size: 18px;
+    color: var(--ivory);
+    background: var(--burgundy-deep);
+    border: none; padding: 14px; cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .modal-submit:hover{ background: var(--burgundy); }
+  .modal-submit:disabled{ opacity: 0.6; cursor: default; }
+
+  .modal-success{ display:none; }
+  .modal-success.show{ display:block; }
+  .modal-success svg{ margin: 0 auto 14px; display:block; }
+  .modal-success p{ font-family:'Cormorant Garamond', serif; font-style: italic; font-size: 22px; color: var(--burgundy-deep); }
+
+  .modal-error{
+    display:none; color: #8a2d2d; font-size: 14px; margin-top: 10px;
+  }
+  .modal-error.show{ display:block; }
+
+  footer{
+    text-align:center; padding: 50px 24px; color: #7a6a5a;
+    font-family:'Cormorant Garamond', serif; font-style: italic; font-size: 18px; letter-spacing: 0.02em;
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <g id="leaf">
+      <path d="M0,0 C -9,-16 -8,-34 0,-46 C 8,-34 9,-16 0,0 Z" fill="none" stroke="#c9a24a" stroke-width="1.3"/>
+      <path d="M0,-3 C -1,-16 -1,-30 0,-42" fill="none" stroke="#c9a24a" stroke-width="0.8"/>
+    </g>
+    <g id="blossom">
+      <g stroke="#c9a24a" stroke-width="1.2" fill="none">
+        <ellipse cx="0" cy="-11" rx="6" ry="11" transform="rotate(0)"/>
+        <ellipse cx="0" cy="-11" rx="6" ry="11" transform="rotate(72)"/>
+        <ellipse cx="0" cy="-11" rx="6" ry="11" transform="rotate(144)"/>
+        <ellipse cx="0" cy="-11" rx="6" ry="11" transform="rotate(216)"/>
+        <ellipse cx="0" cy="-11" rx="6" ry="11" transform="rotate(288)"/>
+      </g>
+      <circle r="3" fill="#c9a24a"/>
+    </g>
+    <g id="bud"><ellipse cx="0" cy="0" rx="4.5" ry="7" fill="none" stroke="#c9a24a" stroke-width="1.1"/></g>
+
+    <g id="corner-spray">
+      <path d="M6,6 C 40,10 66,30 82,64 C 96,92 108,118 138,132" fill="none" stroke="#c9a24a" stroke-width="1.3"/>
+      <path d="M20,10 C 44,26 54,46 50,70" fill="none" stroke="#c9a24a" stroke-width="1" opacity="0.85"/>
+      <use href="#leaf" transform="translate(38,22) rotate(56)"/>
+      <use href="#leaf" transform="translate(64,52) rotate(40) scale(0.85)"/>
+      <use href="#leaf" transform="translate(30,44) rotate(-30) scale(0.7)"/>
+      <use href="#leaf" transform="translate(100,96) rotate(35) scale(0.9)"/>
+      <use href="#blossom" transform="translate(86,66) scale(1.15)"/>
+      <use href="#blossom" transform="translate(132,128) scale(0.85)"/>
+      <use href="#bud" transform="translate(56,36) rotate(20)"/>
+      <use href="#bud" transform="translate(112,104) rotate(-15) scale(0.9)"/>
+    </g>
+
+    <g id="crest-mark">
+      <circle cx="0" cy="0" r="40" fill="none" stroke="#c9a24a" stroke-width="1.2"/>
+      <circle cx="0" cy="0" r="46" fill="none" stroke="#c9a24a" stroke-width="0.6" opacity="0.6"/>
+      <use href="#leaf" transform="translate(-34,26) rotate(200) scale(0.6)"/>
+      <use href="#leaf" transform="translate(-22,36) rotate(230) scale(0.55)"/>
+      <use href="#leaf" transform="translate(34,26) rotate(160) scale(0.6)"/>
+      <use href="#leaf" transform="translate(22,36) rotate(130) scale(0.55)"/>
+      <text x="0" y="14" text-anchor="middle" font-family="Pinyon Script, cursive" font-size="46" fill="#c9a24a">FJ</text>
+    </g>
+
+    <g id="big-blossom">
+      <g stroke="#c9a24a" stroke-width="2" fill="none">
+        <ellipse cx="0" cy="-70" rx="46" ry="72" transform="rotate(0)"/>
+        <ellipse cx="0" cy="-70" rx="46" ry="72" transform="rotate(60)"/>
+        <ellipse cx="0" cy="-70" rx="46" ry="72" transform="rotate(120)"/>
+        <ellipse cx="0" cy="-70" rx="46" ry="72" transform="rotate(180)"/>
+        <ellipse cx="0" cy="-70" rx="46" ry="72" transform="rotate(240)"/>
+        <ellipse cx="0" cy="-70" rx="46" ry="72" transform="rotate(300)"/>
+      </g>
+      <circle r="16" fill="none" stroke="#c9a24a" stroke-width="2"/>
+    </g>
+
+    <g id="mini-flower">
+      <g stroke="#c9a24a" stroke-width="1.1" fill="none">
+        <ellipse cx="0" cy="-6" rx="3.6" ry="6.5" transform="rotate(0)"/>
+        <ellipse cx="0" cy="-6" rx="3.6" ry="6.5" transform="rotate(72)"/>
+        <ellipse cx="0" cy="-6" rx="3.6" ry="6.5" transform="rotate(144)"/>
+        <ellipse cx="0" cy="-6" rx="3.6" ry="6.5" transform="rotate(216)"/>
+        <ellipse cx="0" cy="-6" rx="3.6" ry="6.5" transform="rotate(288)"/>
+      </g>
+      <circle r="1.8" fill="#c9a24a"/>
+    </g>
+  </defs>
+</svg>
+
+  <section class="hero">
+    <div class="hero-frame"></div>
+    <svg class="watermark" viewBox="-90 -160 180 220"><use href="#big-blossom"/></svg>
+    <svg class="floral tl" viewBox="0 0 160 160"><use href="#corner-spray"/></svg>
+    <svg class="floral tr" viewBox="0 0 160 160"><use href="#corner-spray"/></svg>
+    <svg class="floral bl" viewBox="0 0 160 160"><use href="#corner-spray"/></svg>
+    <svg class="floral br" viewBox="0 0 160 160"><use href="#corner-spray"/></svg>
+
+    <div class="hero-inner">
+      <svg class="crest" width="86" height="86" viewBox="-50 -50 100 100"><use href="#crest-mark"/></svg>
+      <h1 class="title">Koito</h1>
+      <p class="subtitle">Two Families United</p>
+      <div class="divider"><span class="line"></span><svg width="16" height="16" viewBox="-9 -9 18 18"><use href="#mini-flower"/></svg><span class="line r"></span></div>
+      <p class="lead">Together with our families, we joyfully welcome you<br>to witness our union</p>
+      <p class="names">Faith Maritim<span class="amp">&amp;</span>Joshua Ngomeli</p>
+      <p class="save-date">Saturday, 10th October 2026 &nbsp;·&nbsp; 12:00 Noon<br><span class="venue">Chepkolon, Kericho County</span></p>
+    </div>
+    <div class="scroll-cue">SCROLL FOR DETAILS</div>
+  </section>
+
+  <section class="details">
+    <p class="kicker">The Ceremony</p>
+    <h2>Join us as we celebrate</h2>
+    <div class="mini-divider"><span class="line"></span><svg width="14" height="14" viewBox="-9 -9 18 18"><use href="#mini-flower"/></svg><span class="line r"></span></div>
+    <div class="cards">
+      <div class="card">
+        <div class="label">DATE</div>
+        <div class="value">10th October<small>2026 · Saturday</small></div>
+      </div>
+      <div class="card">
+        <div class="label">TIME</div>
+        <div class="value">12:00 Noon<small>Kindly arrive early</small></div>
+      </div>
+      <div class="card">
+        <div class="label">VENUE</div>
+        <div class="value">Chepkolon<small>Kericho County</small><small>Pin: Koiyet Tea Buying Centre</small><a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Koiyet+Tea+Buying+Centre+Kericho" target="_blank" rel="noopener">View on map →</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="split">
+    <svg class="floral small tl" viewBox="0 0 160 160"><use href="#corner-spray"/></svg>
+    <svg class="floral small br" viewBox="0 0 160 160"><use href="#corner-spray"/></svg>
+    <div class="split-inner">
+      <div>
+        <h3>DRESS CODE</h3>
+        <p>Shades of Brown</p>
+        <p class="small">Kitenge welcomed and encouraged</p>
+      </div>
+      <div>
+        <h3>RSVP</h3>
+        <p>We'd love to know you're coming</p>
+        <button class="rsvp-btn" onclick="openRsvpModal()">RSVP Now</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>With love, Faith &amp; Joshua</footer>
+
+  <!-- RSVP Modal -->
+  <div class="modal-overlay" id="rsvpOverlay">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeRsvpModal()" aria-label="Close">&times;</button>
+
+      <div id="rsvpFormWrap">
+        <h3>Kindly RSVP</h3>
+        <p class="sub">Faith &amp; Joshua's Koito &middot; 10th October 2026</p>
+        <form id="rsvpForm">
+          <div class="field">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" required>
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="field">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" required>
+          </div>
+          <div class="field">
+            <label for="guests">Number of Guests</label>
+            <input type="number" id="guests" name="guests" min="1" max="10" value="1" required>
+          </div>
+          <button type="submit" class="modal-submit" id="rsvpSubmitBtn">Send RSVP</button>
+          <p class="modal-error" id="rsvpError">Something went wrong — please try again, or reach us directly.</p>
+        </form>
+      </div>
+
+      <div class="modal-success" id="rsvpSuccess">
+        <svg width="46" height="46" viewBox="-9 -9 18 18"><use href="#mini-flower"/></svg>
+        <p>Thank you! We can't wait to celebrate with you.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Paste your Google Apps Script Web App URL here (ends in /exec)
+    const RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbx0jbJK_svLQ-Qis0wGrXLs_ip6n_sePY_rLXYS2L7o7gwxlTwyFrkACYUDhK2PCXcf/exec";
+
+    function openRsvpModal(){
+      document.getElementById('rsvpOverlay').classList.add('open');
+    }
+    function closeRsvpModal(){
+      document.getElementById('rsvpOverlay').classList.remove('open');
+    }
+    document.getElementById('rsvpOverlay').addEventListener('click', function(e){
+      if(e.target === this) closeRsvpModal();
+    });
+
+    document.getElementById('rsvpForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const btn = document.getElementById('rsvpSubmitBtn');
+      const errorEl = document.getElementById('rsvpError');
+      errorEl.classList.remove('show');
+
+      if(RSVP_ENDPOINT.indexOf('PASTE_YOUR_URL_HERE') !== -1){
+        errorEl.textContent = 'RSVP is not connected yet — add your Google Sheet URL in the site code.';
+        errorEl.classList.add('show');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      const data = new URLSearchParams();
+      data.append('fullName', document.getElementById('fullName').value);
+      data.append('email', document.getElementById('email').value);
+      data.append('phone', document.getElementById('phone').value);
+      data.append('guests', document.getElementById('guests').value);
+
+      fetch(RSVP_ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: data
+      })
+      .then(function(){
+        document.getElementById('rsvpFormWrap').style.display = 'none';
+        document.getElementById('rsvpSuccess').classList.add('show');
+      })
+      .catch(function(){
+        errorEl.classList.add('show');
+        btn.disabled = false;
+        btn.textContent = 'Send RSVP';
+      });
+    });
+  </script>
+
+</body>
+</html>
